@@ -2,10 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ues.occ.edu.sv.javaapp;
+package ues.occ.edu.sv.javaapp.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,42 +25,44 @@ import javax.persistence.TemporalType;
  * @author bryan
  */
 @Entity
-@Table(name = "ruta", catalog = "app1", schema = "public")
+@Table(name = "estado", catalog = "app1", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "Ruta.findAll", query = "SELECT r FROM Ruta r"),
-    @NamedQuery(name = "Ruta.findByIdRuta", query = "SELECT r FROM Ruta r WHERE r.idRuta = :idRuta"),
-    @NamedQuery(name = "Ruta.findByNombre", query = "SELECT r FROM Ruta r WHERE r.nombre = :nombre"),
-    @NamedQuery(name = "Ruta.findByFechaCreacion", query = "SELECT r FROM Ruta r WHERE r.fechaCreacion = :fechaCreacion"),
-    @NamedQuery(name = "Ruta.findByObservaciones", query = "SELECT r FROM Ruta r WHERE r.observaciones = :observaciones")})
-public class Ruta implements Serializable {
+    @NamedQuery(name = "Estado.findAll", query = "SELECT e FROM Estado e"),
+    @NamedQuery(name = "Estado.findByIdEstado", query = "SELECT e FROM Estado e WHERE e.idEstado = :idEstado"),
+    @NamedQuery(name = "Estado.findByNombre", query = "SELECT e FROM Estado e WHERE e.nombre = :nombre"),
+    @NamedQuery(name = "Estado.findByFechaCreacion", query = "SELECT e FROM Estado e WHERE e.fechaCreacion = :fechaCreacion"),
+    @NamedQuery(name = "Estado.findByObservaciones", query = "SELECT e FROM Estado e WHERE e.observaciones = :observaciones")})
+public class Estado implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_ruta", nullable = false)
-    private Long idRuta;
-    @Column(name = "nombre", length = 2147483647)
+    @Column(name = "id_estado", nullable = false)
+    private Integer idEstado;
+    @Column(name = "nombre", length = 155)
     private String nombre;
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
     @Column(name = "observaciones", length = 2147483647)
     private String observaciones;
+    @OneToMany(mappedBy = "idEstado")
+    private List<ObjetoEstado> objetoEstadoList;
 
-    public Ruta() {
+    public Estado() {
     }
 
-    public Ruta(Long idRuta) {
-        this.idRuta = idRuta;
+    public Estado(Integer idEstado) {
+        this.idEstado = idEstado;
     }
 
-    public Long getIdRuta() {
-        return idRuta;
+    public Integer getIdEstado() {
+        return idEstado;
     }
 
-    public void setIdRuta(Long idRuta) {
-        this.idRuta = idRuta;
+    public void setIdEstado(Integer idEstado) {
+        this.idEstado = idEstado;
     }
 
     public String getNombre() {
@@ -85,21 +89,29 @@ public class Ruta implements Serializable {
         this.observaciones = observaciones;
     }
 
+    public List<ObjetoEstado> getObjetoEstadoList() {
+        return objetoEstadoList;
+    }
+
+    public void setObjetoEstadoList(List<ObjetoEstado> objetoEstadoList) {
+        this.objetoEstadoList = objetoEstadoList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idRuta != null ? idRuta.hashCode() : 0);
+        hash += (idEstado != null ? idEstado.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Ruta)) {
+        if (!(object instanceof Estado)) {
             return false;
         }
-        Ruta other = (Ruta) object;
-        if ((this.idRuta == null && other.idRuta != null) || (this.idRuta != null && !this.idRuta.equals(other.idRuta))) {
+        Estado other = (Estado) object;
+        if ((this.idEstado == null && other.idEstado != null) || (this.idEstado != null && !this.idEstado.equals(other.idEstado))) {
             return false;
         }
         return true;
@@ -107,7 +119,7 @@ public class Ruta implements Serializable {
 
     @Override
     public String toString() {
-        return "ues.occ.edu.sv.javaapp.Ruta[ idRuta=" + idRuta + " ]";
+        return "ues.occ.edu.sv.javaapp.Estado[ idEstado=" + idEstado + " ]";
     }
     
 }
