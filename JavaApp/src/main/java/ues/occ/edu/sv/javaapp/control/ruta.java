@@ -8,69 +8,68 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import ues.occ.edu.sv.javaapp.entity.TipoObjeto;
+import ues.occ.edu.sv.javaapp.entity.Estado;
+import ues.occ.edu.sv.javaapp.entity.Ruta;
 
 /**
  *
  * @author bryan
  */
-public class tipo_objeto {
-    
-    EntityManagerFactory emf=Persistence.createEntityManagerFactory("TPI_PERSITENCIA");
+public class ruta {
+        EntityManagerFactory emf=Persistence.createEntityManagerFactory("TPI_PERSITENCIA");
         EntityManager em = emf.createEntityManager();
-        EntityTransaction et=em.getTransaction();
+        EntityTransaction et=em.getTransaction();  
         
-        public boolean crear(TipoObjeto crear){
+        
+        public boolean crear(Ruta nuevo){
         
             try {
-                et.begin();
-            em.persist(crear);
+            et.begin();
+            em.persist(nuevo);
             et.commit();
             return true;
             } catch (Exception e) {
             et.rollback();
-                
             }
             return false;
         }
         
-        public boolean actualizar(TipoObjeto actualizar){
-        
-            try {
-                et.begin();
-                em.find(TipoObjeto.class, actualizar.getIdTipoObjeto());
-                em.merge(actualizar);
-                et.commit();
-                return true;
-            } catch (Exception e) {
-                et.rollback();
-            }
-            return false;
-        }
-        
-        public boolean borrar (Integer Id){
-        
-            TipoObjeto borrar;
-            borrar  = em.getReference(TipoObjeto.class, Id);
-            
+        public boolean actualizar(Ruta actualizar){
             try {
             et.begin();
-            borrar.getIdTipoObjeto();
-            em.remove(borrar);
+            em.find(Estado.class, actualizar.getIdRuta());
+            em.merge(actualizar);
             et.commit();
             return true;
             } catch (Exception e) {
                 et.rollback();
             }
             return false;
-            
+        
         }
         
-        public boolean leer(Integer Id){
+        public boolean borrar(Long Id){
+        
+            Ruta borrar;
+            borrar =  em.getReference(Ruta.class, Id);
             
             try {
             et.begin();
-            em.createQuery("SELECT * FROM tipo_objeto WHERE id_tipo_objeto="+Id);
+            borrar.getIdRuta();
+            em.remove(borrar);
+            et.commit();   
+            return true;
+            } catch (Exception e) {
+                et.rollback();
+            }
+            return false;
+        }
+        
+        public boolean leer(Long Id){
+        
+            try {
+            et.begin();
+            em.createQuery("SELECT * FROM ruta WHERE id_ruta="+Id);
             et.commit();
             System.out.println("Registo con Id"+Id+" Encontado con Exito");
             return true;
@@ -79,8 +78,5 @@ public class tipo_objeto {
                 
             }
             return false;
-        
         }
-        
-    
 }

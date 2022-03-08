@@ -70,7 +70,7 @@ public class objeto_estado {
        
        try {
            et.begin();
-           em.createQuery("SELECT * FROM estado WHERE id_objeto_esatdo="+Id);
+           em.createQuery("SELECT * FROM objeto_estado WHERE id_objeto_esatdo="+Id);
            et.commit();
            System.out.println("Registo con Id"+Id+" Encontado con Exito");
            return true;
